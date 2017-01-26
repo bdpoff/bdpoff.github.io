@@ -1,3 +1,6 @@
+*{
+	border: 1px solid grey;
+}
 p{  line-height: 1em;
     color: white;
 }
