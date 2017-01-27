@@ -13,9 +13,9 @@ h1, h2, h3, h4{
 	margin: 0 0 .5em 0;
 }
 h1{ font-size: 5.0em; }
-h2{ font-size: 1.5em; }
-h3{ font-size: 1.5em; }
-h4{ font-size: 1.5em; }
+h2{ font-size: 3.5em; }
+h3{ font-size: 3.5em; }
+h4{ font-size: 3.5em; }
 a{
 	color: white;
 	text-decoration: none;
@@ -23,7 +23,7 @@ a{
 
 body{
     font-family: arial; 
-    font-size: 80%; 
+    font-size: 2.0em; 
     line-height: 1.2em; 
     width: 100%; 
     margin: 0; 
@@ -40,7 +40,7 @@ body{
 }
 #nav{
 	font-family: economica;
-	width: 60%;
+	width: 80%;
 	display: inline-block;
 	text-align: right;
 	float: right;
@@ -48,7 +48,7 @@ body{
 	#nav ul{}
 		#nav ul li{
 			display: inline-block;
-			height: 62px;
+			height: 25%;
 		}
 			#nav ul li a{
 				padding: 20px;
