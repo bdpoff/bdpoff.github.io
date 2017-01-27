@@ -63,3 +63,10 @@ body{
 	padding: 20px;
 	clear: both;
 }
+
+#code{
+	margin: 30px 0;
+	background: teal;
+	padding: 20px;
+	clear: both;
+}
