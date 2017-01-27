@@ -77,3 +77,10 @@ body{
 	padding: 20px;
 	clear: both;
 }
+
+#clip{
+	padding: 20px;
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
