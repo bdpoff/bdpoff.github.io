@@ -32,7 +32,6 @@ body{
 #page{ margin: 20px; }
 
 #logo{
-	width: 35%;
 	margin-top: 5px;
 	font-family: economica;
 	font-weight: bold;
@@ -40,7 +39,7 @@ body{
 }
 #nav{
 	font-family: economica;
-	width: 80%;
+	font-size: 2.0em;
 	display: inline-block;
 	text-align: right;
 	float: right;
