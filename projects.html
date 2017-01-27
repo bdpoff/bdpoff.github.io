@@ -25,10 +25,54 @@
 		<div id="countervail">
 			<h2>Countervail</h2>
 			<p>
-				Description of Countervail.
+				Countervail is a mobile game I am currently developing for Android devices. It uses the Android Wi-Fi
+				peer-to-peer (P2P) framework to allow two users to play a collectible card game by transferring information
+				directly between their devices without intermediate access points or servers. Once completed, this will allow
+				Countervail to be played anywhere that a challenger happens to be! Currently, I am the sole developer of this
+				app, so all of the game design, extremely limited artwork, and coding have been provided by me with the help
+				of official Android documentation and examples.
 			</p>
 
 		</div>
+		<div id="code">
+			<h3>Code Samples</h3>
+			<p>
+				Creating a Deck
+
+				<pre><code>potentialCardsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+					    @Override
+					    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						Card card = (Card) parent.getItemAtPosition(position);
+						currentDeck.addCard(card);
+						currentDeck.sortDeck();
+						currentDeckAdapter.notifyDataSetChanged();
+					    }
+					});
+
+					potentialCardsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+					    @Override
+					    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long l) {
+						FragmentManager fm = getFragmentManager();
+						Bundle bundle = new Bundle();
+						Card card = (Card) parent.getItemAtPosition(position);
+						if (card.getKind().equals(Type.MINION)){
+						    Minion minion = (Minion) parent.getItemAtPosition(position);
+						    MinionDetailDialog minionFrag = new MinionDetailDialog();
+						    bundle.putParcelable("SelectedCard", minion);
+						    minionFrag.setArguments(bundle);
+						    minionFrag.show(fm, "Selection");
+						}
+						else if (card.getKind().equals(Type.ACTION)){
+						    Spell spell = (Spell) parent.getItemAtPosition(position);
+						    SpellDetailDialog spellFrag = new SpellDetailDialog();
+						    bundle.putParcelable("SelectedCard", spell);
+						    spellFrag.setArguments(bundle);
+						    spellFrag.show(fm, "Selection");
+						}
+
+						return true;
+					    }
+					});</code></pre>
 	</div>
 </body>
 </html>
