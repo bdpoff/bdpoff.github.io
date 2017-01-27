@@ -75,6 +75,23 @@ potentialCardsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickLis
 });
 				</code></pre></div>
 			</p>
+			<p>
+			Saving a Deck
+				<div id="code"><pre><code>
+public void saveDeck(View view){
+        String deckName = deckNameEditText.getText().toString();
+        if (deckName.equals("")){
+            deckName = "Name Me!" + Calendar.getInstance().get(Calendar.DATE) + Calendar.getInstance().get(Calendar.SECOND);
+        }
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("Decks", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(deckName, gson.toJson(currentDeck.getList()));
+        editor.apply();
+        finish();
+    }
+    				</code></pre></div>
+			</p>
 		</div>
 	</div>
 </body>
