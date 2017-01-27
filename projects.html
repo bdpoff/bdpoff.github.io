@@ -40,39 +40,39 @@
 				Creating a Deck
 
 				<div id="code"><pre><code>
-	potentialCardsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-	    @Override
-	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Card card = (Card) parent.getItemAtPosition(position);
-		currentDeck.addCard(card);
-		currentDeck.sortDeck();
-		currentDeckAdapter.notifyDataSetChanged();
-	    }
-	});
+potentialCardsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	Card card = (Card) parent.getItemAtPosition(position);
+	currentDeck.addCard(card);
+	currentDeck.sortDeck();
+	currentDeckAdapter.notifyDataSetChanged();
+    }
+});
 
-	potentialCardsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-	    @Override
-	    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long l) {
-		FragmentManager fm = getFragmentManager();
-		Bundle bundle = new Bundle();
-		Card card = (Card) parent.getItemAtPosition(position);
-		if (card.getKind().equals(Type.MINION)){
-		    Minion minion = (Minion) parent.getItemAtPosition(position);
-		    MinionDetailDialog minionFrag = new MinionDetailDialog();
-		    bundle.putParcelable("SelectedCard", minion);
-		    minionFrag.setArguments(bundle);
-		    minionFrag.show(fm, "Selection");
-		}
-		else if (card.getKind().equals(Type.ACTION)){
-		    Spell spell = (Spell) parent.getItemAtPosition(position);
-		    SpellDetailDialog spellFrag = new SpellDetailDialog();
-		    bundle.putParcelable("SelectedCard", spell);
-		    spellFrag.setArguments(bundle);
-		    spellFrag.show(fm, "Selection");
-		}
-		return true;
-	    }
-	});
+potentialCardsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long l) {
+	FragmentManager fm = getFragmentManager();
+	Bundle bundle = new Bundle();
+	Card card = (Card) parent.getItemAtPosition(position);
+	if (card.getKind().equals(Type.MINION)){
+	    Minion minion = (Minion) parent.getItemAtPosition(position);
+	    MinionDetailDialog minionFrag = new MinionDetailDialog();
+	    bundle.putParcelable("SelectedCard", minion);
+	    minionFrag.setArguments(bundle);
+	    minionFrag.show(fm, "Selection");
+	}
+	else if (card.getKind().equals(Type.ACTION)){
+	    Spell spell = (Spell) parent.getItemAtPosition(position);
+	    SpellDetailDialog spellFrag = new SpellDetailDialog();
+	    bundle.putParcelable("SelectedCard", spell);
+	    spellFrag.setArguments(bundle);
+	    spellFrag.show(fm, "Selection");
+	}
+	return true;
+    }
+});
 				</code></pre></div>
 			</p>
 		</div>
