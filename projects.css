@@ -77,4 +77,6 @@ body{
 	padding: 20px;
 	clear: both;
 	font-family: monospace;
+	font-size: 0.8em;
+	line-height: 1.0em;
 }
