@@ -1,7 +1,4 @@
-*{
-	border: 1px solid grey;
-}
-p{  line-height: 1em;
+p{ 
     color: white;
 }
 
@@ -23,8 +20,8 @@ a{
 
 body{
     font-family: arial; 
-    font-size: 1.0em; 
-    line-height: 1.2em; 
+    font-size: 1.2em; 
+    line-height: 1.5em; 
     width: 100%; 
     margin: 0; 
     background:  #4CA6A6;
