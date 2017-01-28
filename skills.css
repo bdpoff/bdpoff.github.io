@@ -84,3 +84,8 @@ body{
 	margin-left: auto;
 	margin-right: auto;
 }
+
+@font-face {
+    font-family: "economica";
+    src: url("http://bdpoff.github.io/res/Economica-Bold.ttf");
+}
