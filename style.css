@@ -70,3 +70,8 @@ body{
     padding: 20px;
     clear: both;
 }
+
+@font-face {
+    font-family: "economica";
+    src: url("http://bdpoff.github.io/res/Economica-Bold.ttf");
+}
