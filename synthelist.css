@@ -1,0 +1,94 @@
+p{ 
+    color: white;
+}
+
+h1, h2, h3, h4{
+    color: white;
+	font-family: economica;
+	font-weight: bold;
+	line-height: 1.1em;
+	margin: 0 0 .5em 0;
+}
+h1{ font-size: 4.0em; }
+h2{ font-size: 3.0em; }
+h3{ font-size: 3.0em; }
+h4{ font-size: 3.0em; }
+a{
+	color: white;
+	text-decoration: none;
+}
+
+body{
+    font-family: arial; 
+    font-size: 1.2em; 
+    line-height: 1.5em; 
+    width: 100%; 
+    margin: 0; 
+    background:  #4CA6A6;
+}
+#page{ margin: 20px; }
+
+#logo{
+	margin-top: 5px;
+	font-family: economica;
+	font-weight: bold;
+	display: inline-block;
+}
+#nav{
+	font-family: economica;
+	font-size: 2.0em;
+	font-weight: bold;
+	display: inline-block;
+	text-align: right;
+	float: right;
+}
+	#nav ul{}
+		#nav ul li{
+			display: inline-block;
+			height: 25%;
+		}
+			#nav ul li a{
+				padding: 20px;
+				background: teal;
+				color: white;
+			}
+			#nav ul li a:hover{
+				background-color: #005959;
+			}
+			#nav ul li a:active{ background-color: #005959; }
+
+#countervail{
+	margin: 30px 0;
+	background: teal;
+	padding: 20px;
+	clear: both;
+}
+
+#samples{
+	margin: 30px 0;
+	background: teal;
+	padding: 20px;
+	clear: both;
+}
+
+#code{
+	background: white;
+	clear: both;
+	font-family: monospace;
+	font-size: 0.8em;
+	line-height: 1.0em;
+}
+
+#artwork{
+	margin: 30px 0;
+	background: teal;
+	padding: 20px;
+	clear: both;
+}
+
+#clip{
+	padding: 20px;
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
