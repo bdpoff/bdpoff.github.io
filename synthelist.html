@@ -46,42 +46,55 @@
 		<div id="samples">
 			<h3>Code Samples</h3>
 			<p>
-				Creating a Deck
+				Menu Option Order Preference
 
 				<div id="code"><pre><code>
-	potentialCardsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-	    @Override
-	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Card card = (Card) parent.getItemAtPosition(position);
-		currentDeck.addCard(card);
-		currentDeck.sortDeck();
-		currentDeckAdapter.notifyDataSetChanged();
-	    }
-	});
+	@Override
+    protected void onBindView(View view){
+        super.onBindView(view);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.order_preference_list);
+        LinearLayoutManager recyclerListManager = new LinearLayoutManager(this.getContext());
+        recyclerView.setLayoutManager(recyclerListManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), recyclerListManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        final PreferenceListAdapter adapter = new PreferenceListAdapter(options);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                Collections.swap(options, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return false;
+            }
 
-	potentialCardsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-	    @Override
-	    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long l) {
-		FragmentManager fm = getFragmentManager();
-		Bundle bundle = new Bundle();
-		Card card = (Card) parent.getItemAtPosition(position);
-		if (card.getKind().equals(Type.MINION)){
-		    Minion minion = (Minion) parent.getItemAtPosition(position);
-		    MinionDetailDialog minionFrag = new MinionDetailDialog();
-		    bundle.putParcelable("SelectedCard", minion);
-		    minionFrag.setArguments(bundle);
-		    minionFrag.show(fm, "Selection");
-		}
-		else if (card.getKind().equals(Type.ACTION)){
-		    Spell spell = (Spell) parent.getItemAtPosition(position);
-		    SpellDetailDialog spellFrag = new SpellDetailDialog();
-		    bundle.putParcelable("SelectedCard", spell);
-		    spellFrag.setArguments(bundle);
-		    spellFrag.show(fm, "Selection");
-		}
-		return true;
-	    }
-	});
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                //Not implementing swipe
+            }
+
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG, ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
+            }
+
+            @Override
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder){
+                super.clearView(recyclerView, viewHolder);
+                Gson gson = new Gson();
+                curentJson = gson.toJson(options);
+                persistString(curentJson);
+                notifyChanged();
+            }
+        });
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapter);
+        Gson gson = new Gson();
+        ArrayList<String> aList = gson.fromJson(curentJson, new TypeToken<ArrayList<String>>(){}.getType());
+        if (aList == null){
+            aList = new ArrayList<>(Arrays.asList("Sort", "Refresh", "Edit", "(Un)Lock", "Prioritize", "Send", "Delete"));
+        }
+        options.clear();
+        options.addAll(aList);
+        adapter.notifyDataSetChanged();
+    }
 				</code></pre></div>
 			</p>
 			<p>
