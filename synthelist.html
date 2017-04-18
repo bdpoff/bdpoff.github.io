@@ -50,7 +50,7 @@
 
 				<div id="code"><pre><code>
 	@Override
-    protected void onBindView(View view){
+    	protected void onBindView(View view){
         super.onBindView(view);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.order_preference_list);
         LinearLayoutManager recyclerListManager = new LinearLayoutManager(this.getContext());
@@ -98,42 +98,54 @@
 				</code></pre></div>
 			</p>
 			<p>
-			Saving a Deck
+			Search Function
 				<div id="code"><pre><code>
-	public void saveDeck(View view){
-		String deckName = deckNameEditText.getText().toString();
-		if (deckName.equals("")){
-		    deckName = "Name Me!" + Calendar.getInstance().get(Calendar.DATE) + Calendar.getInstance().get(Calendar.SECOND);
-		}
-		SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("Decks", MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPref.edit();
-		Gson gson = new Gson();
-		editor.putString(deckName, gson.toJson(currentDeck.getList()));
-		editor.apply();
-		finish();
-	}
+    public void search(String term){
+        searchDialog.dismiss();
+        ArrayList<String> matchLists = new ArrayList<>();
+        Gson gson = new Gson();
+        for (Map.Entry<String, ?> entry : sharedPreferences.getAll().entrySet()){
+            String json = sharedPreferences.getString(entry.getKey(), null);
+            ArrayList<Item> aList = gson.fromJson(json, new TypeToken<ArrayList<Item>>(){}.getType());
+            for (Item item : aList){
+                if(item.getName().equalsIgnoreCase(term)){
+                    matchLists.add(entry.getKey());
+                }
+            }
+        }
+        if (matchLists.isEmpty()){
+            Toast.makeText(this, "No matches found.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("MATCH_LIST", matchLists);
+        matchDialog.setArguments(bundle);
+        matchDialog.show(fm, "MATCH");
+    }
     				</code></pre></div>
 			</p>
 			<p>
-				Drawing
+				Managing Item Status
 				<div id="code"><pre><code>
-	public void draw(){
-		Card card = me.getDeck().draw();
-		fragmentTransaction = fragmentManager.beginTransaction();
-		switch (card.getKind()){
-		    case MINION:
-			MinionCardFragment minionCardFragment = MinionCardFragment.newInstance(card);
-			fragmentTransaction.add(R.id.game_my_cards, minionCardFragment);
-			me.getHand().addCard(card, minionCardFragment);
-			break;
-		    case ACTION:
-			ActionCardFragment actionCardFragment = ActionCardFragment.newInstance(card);
-			fragmentTransaction.add(R.id.game_my_cards, actionCardFragment);
-			me.getHand().addCard(card, actionCardFragment);
-			break;
-		}
-		fragmentTransaction.commit();
-	}
+    public void itemClicked(int position){
+        if (!sharedPref.getBoolean((listName + "Lock"), false)) {
+            if (!items.get(position).getDone()) {
+                items.get(position).setDone(true);
+                items.get(position).setRenew(false);
+            } else {
+                if (!items.get(position).getRenew()){
+                    items.get(position).setRenew(true);
+                }
+                else {
+                    items.get(position).setDone(false);
+                }
+            }
+            itemListAdapter.notifyDataSetChanged();
+        }
+        else {
+            Toast.makeText(getBaseContext(), "This list is locked.", Toast.LENGTH_SHORT).show();
+        }
+    }
 				</code></pre></div>
 			</p>
 		</div>
