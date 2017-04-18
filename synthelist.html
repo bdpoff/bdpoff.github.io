@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BPoff - Synthelist</title>
+	
+	<meta name="author" content="BDPoff" />
+	<meta name="description" content="personal website" />
+	<link rel="stylesheet" href="synthelist.css" type="text/css" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Economica" type="text/css">
+	
+</head>
+<body>
+
+	<div id="page">
+		<div id="logo">
+			<h1><a href="/" id="logoLink">Brandon D. Poff</a></h1>
+		</div>
+		<div id="nav">
+			<ul>
+				<li><a href="/index.html">Home</a></li>
+				<li><a href="/synthelist.html">Synthelist</a></li>
+				<li><a href="/countervail.html">Countervail</a></li>
+				<li><a href="/skills.html">Skills</a></li>
+				<li><a href="/BPoff Resume.doc">Resume</a><li>
+			</ul>	
+		</div>
+		<div id="countervail">
+			<h2>Overview</h2>
+			<p>
+				Synthelist is a simple app that allows the user to manage lists in a variety of formats. From to-do lists to shopping lists, the user is able to arrange and edit the items within based upon personal preference. Synthelist is designed to be customizable so that each individual can use the features in the way that is most effective for him or her.
+			</p>
+      <p>
+        One of Synthelist's more interesting features is the ability to save a list to a file, share that file however the user prefers, and then open the file from another phone. Effectively, this means that the user can send a list to anyone with the app, to more easily communicate the content of a list.
+      </p>
+      <p>
+        Other features include several sorting criteria for items in a list, a search function, drag-and-drop organization, and a customizable interface that allows the user to easily access his or her most-used features.
+      </p>
+      <p>
+        Finally, in terms of basic list functionality, Synthelist allows items to be differentiated based on user input. If an item has been completed, it can be crossed-off, but will remain visible until the list is refreshed. This allows the user to see which items have been completed and which remain. If an item cannot be completed, it can be marked for renewal, so that the user will not confuse it with items that have yet to be completed.
+      </p>
+      <p>
+        These features make Synthelist a simple, yet robust, utility that should prove useful to the user in a variety of contexts.
+      </p>
+
+		</div>
+		<div id="samples">
+			<h3>Code Samples</h3>
+			<p>
+				Creating a Deck
+
+				<div id="code"><pre><code>
+	potentialCardsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	    @Override
+	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		Card card = (Card) parent.getItemAtPosition(position);
+		currentDeck.addCard(card);
+		currentDeck.sortDeck();
+		currentDeckAdapter.notifyDataSetChanged();
+	    }
+	});
+
+	potentialCardsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+	    @Override
+	    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long l) {
+		FragmentManager fm = getFragmentManager();
+		Bundle bundle = new Bundle();
+		Card card = (Card) parent.getItemAtPosition(position);
+		if (card.getKind().equals(Type.MINION)){
+		    Minion minion = (Minion) parent.getItemAtPosition(position);
+		    MinionDetailDialog minionFrag = new MinionDetailDialog();
+		    bundle.putParcelable("SelectedCard", minion);
+		    minionFrag.setArguments(bundle);
+		    minionFrag.show(fm, "Selection");
+		}
+		else if (card.getKind().equals(Type.ACTION)){
+		    Spell spell = (Spell) parent.getItemAtPosition(position);
+		    SpellDetailDialog spellFrag = new SpellDetailDialog();
+		    bundle.putParcelable("SelectedCard", spell);
+		    spellFrag.setArguments(bundle);
+		    spellFrag.show(fm, "Selection");
+		}
+		return true;
+	    }
+	});
+				</code></pre></div>
+			</p>
+			<p>
+			Saving a Deck
+				<div id="code"><pre><code>
+	public void saveDeck(View view){
+		String deckName = deckNameEditText.getText().toString();
+		if (deckName.equals("")){
+		    deckName = "Name Me!" + Calendar.getInstance().get(Calendar.DATE) + Calendar.getInstance().get(Calendar.SECOND);
+		}
+		SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("Decks", MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		Gson gson = new Gson();
+		editor.putString(deckName, gson.toJson(currentDeck.getList()));
+		editor.apply();
+		finish();
+	}
+    				</code></pre></div>
+			</p>
+			<p>
+				Drawing
+				<div id="code"><pre><code>
+	public void draw(){
+		Card card = me.getDeck().draw();
+		fragmentTransaction = fragmentManager.beginTransaction();
+		switch (card.getKind()){
+		    case MINION:
+			MinionCardFragment minionCardFragment = MinionCardFragment.newInstance(card);
+			fragmentTransaction.add(R.id.game_my_cards, minionCardFragment);
+			me.getHand().addCard(card, minionCardFragment);
+			break;
+		    case ACTION:
+			ActionCardFragment actionCardFragment = ActionCardFragment.newInstance(card);
+			fragmentTransaction.add(R.id.game_my_cards, actionCardFragment);
+			me.getHand().addCard(card, actionCardFragment);
+			break;
+		}
+		fragmentTransaction.commit();
+	}
+				</code></pre></div>
+			</p>
+		</div>
+		<div id="artwork">
+			<h4>Artwork</h4>
+			<p>
+				I'm not artistically talented, but years of video editing with Adobe After Effects have helped me
+				compensate for this deficit with computer-generated gradients and fractal noise.
+				<div id="clip">
+				<img src="res/cvgood.gif" alt="Countervail Main Menu">
+			</div>
+			</p>
+		</div>
+	</div>
+</body>
+</html>
