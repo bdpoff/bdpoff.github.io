@@ -86,6 +86,11 @@ body{
 	clear: both;
 }
 
+#agg{
+	float: center;
+}
+
 #clip{
 	float: left;
+	margin: 30px 0;
 }
